@@ -37,4 +37,13 @@ class DocumentsRow extends SupabaseDataRow {
 
   int get docid => getField<int>('docid')!;
   set docid(int value) => setField<int>('docid', value);
+
+  int? get level => getField<int>('level');
+  set level(int? value) => setField<int>('level', value);
+
+  String? get type => getField<String>('type');
+  set type(String? value) => setField<String>('type', value);
+
+  bool? get visible => getField<bool>('visible');
+  set visible(bool? value) => setField<bool>('visible', value);
 }

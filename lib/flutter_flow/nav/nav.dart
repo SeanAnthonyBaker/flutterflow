@@ -47,6 +47,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: HomePageWidget.routeName,
           path: HomePageWidget.routePath,
           builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: HierachyMaintenanceWidget.routeName,
+          path: HierachyMaintenanceWidget.routePath,
+          builder: (context, params) => HierachyMaintenanceWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

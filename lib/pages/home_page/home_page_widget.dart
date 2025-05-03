@@ -6,8 +6,11 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -61,15 +64,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     _model.promptInputTextController ??= TextEditingController(
         text:
-            'NDBS stands for NTT DATA business solutions, please explain the following in laymans terms in paragrahs of text without Headings: please write this so an executive can understand');
+            'NDBS stands for NTT DATA business solutions, please explain the following in laymans terms in paragrahs of text without Headings: please write this so an executive can understand:\n');
     _model.promptInputFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController(text: 'Gemini 2.0');
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController3 ??=
-        TextEditingController(text: FFAppState().adjustedPrompt);
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.notebookLMContainerTextController ??= TextEditingController(
+        text:
+            'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583');
+    _model.notebookLMContainerFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -98,7 +99,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderRadius: 8.0,
-            buttonSize: 40.0,
+            buttonSize: 198.1,
             fillColor: FlutterFlowTheme.of(context).primary,
             icon: Icon(
               Icons.save_alt_rounded,
@@ -135,10 +136,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           title: Align(
             alignment: AlignmentDirectional(0.0, -1.0),
             child: Text(
-              'RFP AI Response Generator',
+              'Deliverable Generator',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Inter Tight',
+                    font: GoogleFonts.interTight(
+                      fontWeight: FontWeight.w800,
+                      fontStyle: FontStyle.italic,
+                    ),
                     color: Colors.white,
                     fontSize: 22.0,
                     letterSpacing: 0.0,
@@ -148,7 +152,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
             ),
           ),
-          actions: [],
+          actions: [
+            FlutterFlowIconButton(
+              borderRadius: 8.0,
+              buttonSize: 40.0,
+              fillColor: FlutterFlowTheme.of(context).primary,
+              icon: Icon(
+                Icons.auto_awesome_motion_rounded,
+                color: FlutterFlowTheme.of(context).info,
+                size: 24.0,
+              ),
+              onPressed: () async {
+                context.pushNamed(HierachyMaintenanceWidget.routeName);
+              },
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -225,15 +243,41 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontStyle,
+                                      ),
                                       letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .fontStyle,
                                     ),
                                 hintText: 'Please enter prompt then execute',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontStyle,
+                                      ),
                                       letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .fontStyle,
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -270,8 +314,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Inter',
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
                                     letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
                                   ),
                               maxLines: null,
                               cursorColor:
@@ -294,54 +351,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                FlutterFlowIconButton(
-                                  borderRadius: 8.0,
-                                  buttonSize: 40.0,
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  icon: Icon(
-                                    Icons.diamond_outlined,
-                                    color: FlutterFlowTheme.of(context).info,
-                                    size: 24.0,
-                                  ),
-                                  onPressed: () async {
-                                    safeSetState(() {
-                                      _model.textController2?.text =
-                                          'Gemini 2.0';
-                                    });
-                                    FFAppState().NotebookLLM = false;
-                                    safeSetState(() {});
-                                    _model.apiResultnsz =
-                                        await NotebookLLMQueryCall.call();
-
-                                    if ((_model.apiResultnsz?.succeeded ??
-                                        true)) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Swith to Gemini 2.0'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                ),
                                 Expanded(
                                   child: Container(
                                     width: 200.0,
                                     child: TextFormField(
-                                      controller: _model.textController2,
-                                      focusNode: _model.textFieldFocusNode1,
+                                      controller: _model
+                                          .notebookLMContainerTextController,
+                                      focusNode:
+                                          _model.notebookLMContainerFocusNode,
                                       autofocus: false,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -349,15 +366,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Inter',
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
                                               letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
                                             ),
                                         hintText: 'TextField',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Inter',
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
                                               letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
                                             ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -400,13 +451,31 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Inter',
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
                                             letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
                                           ),
-                                      textAlign: TextAlign.center,
+                                      textAlign: TextAlign.start,
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      validator: _model.textController2Validator
+                                      validator: _model
+                                          .notebookLMContainerTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -422,21 +491,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     size: 24.0,
                                   ),
                                   onPressed: () async {
-                                    safeSetState(() {
-                                      _model.textController2?.text =
-                                          'Notebook LLM';
-                                    });
-                                    _model.apiResultxgp =
-                                        await NotebookLLMDriverSetupCall.call();
+                                    _model.apiResultwx5 =
+                                        await AccessViaNgrokGroup
+                                            .notebooklmDriverSetupCall
+                                            .call(
+                                      notebookLMId: _model
+                                          .notebookLMContainerTextController
+                                          .text,
+                                    );
 
-                                    if ((_model.apiResultxgp?.succeeded ??
+                                    if ((_model.apiResultwx5?.succeeded ??
                                         true)) {
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
                                           return AlertDialog(
-                                            title: Text(
-                                                'Switch to NoteBook LLM Successful'),
+                                            title: Text('Message'),
+                                            content: Text('Set up succesful'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -447,8 +518,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           );
                                         },
                                       );
-                                      FFAppState().NotebookLLM = true;
-                                      safeSetState(() {});
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                ),
+                                FlutterFlowIconButton(
+                                  borderRadius: 8.0,
+                                  buttonSize: 40.0,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  icon: Icon(
+                                    Icons.close_fullscreen,
+                                    color: FlutterFlowTheme.of(context).info,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    _model.apiResult0yw =
+                                        await AccessViaNgrokGroup
+                                            .notebooklmDriverCloseCall
+                                            .call(
+                                      notebookLMId: _model
+                                          .notebookLMContainerTextController
+                                          .text,
+                                    );
+
+                                    if ((_model.apiResult0yw?.succeeded ??
+                                        true)) {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Message'),
+                                            content: Text('Driver closed'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     }
 
                                     safeSetState(() {});
@@ -475,132 +587,41 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     padding: EdgeInsets.all(14.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        // AppendGeminiQuery
                                         FFAppState().adjustedPrompt =
                                             functions.setPrompt(
-                                                valueOrDefault<String>(
-                                                  _model
-                                                      .promptInputTextController
-                                                      .text,
-                                                  'explain',
-                                                ),
+                                                FFAppState().adjustedPrompt,
                                                 FFAppState().clipBoard)!;
                                         safeSetState(() {});
-                                        if (FFAppState().NotebookLLM) {
-                                          _model.apiResultxj9 =
-                                              await GetNotebookLLMresponseCall
-                                                  .call();
+                                        // GetGeminiReponse
+                                        _model.apiResultx05 =
+                                            await GetGeminiResponseCall.call(
+                                          prompt: FFAppState().adjustedPrompt,
+                                          apiKey:
+                                              'AIzaSyD5BdFjsYUy_hiNZ9Bi8RoXS2PLxVYK45Y',
+                                        );
 
-                                          if ((_model.apiResultxj9?.succeeded ??
-                                              true)) {
-                                            FFAppState().adjustedPrompt =
-                                                getJsonField(
-                                              (_model.apiResultxj9?.jsonBody ??
-                                                  ''),
-                                              r'''$''',
-                                            ).toString();
-                                            safeSetState(() {});
-                                            safeSetState(() {
-                                              _model.textController3?.text =
-                                                  getJsonField(
-                                                (_model.apiResultxj9
-                                                        ?.jsonBody ??
-                                                    ''),
-                                                r'''$''',
-                                              ).toString();
-                                            });
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text(
-                                                      'Retrieved response forNotebook LLM'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          } else {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text(
-                                                      'Call to Notebook LLM unsuccessful'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          }
-                                        } else {
-                                          _model.apiResultzff =
-                                              await GetGeminiResponseCall.call(
-                                            prompt: FFAppState().adjustedPrompt,
-                                            apiKey:
-                                                'AIzaSyD5BdFjsYUy_hiNZ9Bi8RoXS2PLxVYK45Y',
-                                          );
-
-                                          if ((_model.apiResultzff?.succeeded ??
-                                              true)) {
-                                            FFAppState().adjustedPrompt =
-                                                GetGeminiResponseCall
-                                                    .geminiResponseString(
-                                              (_model.apiResultzff?.jsonBody ??
-                                                  ''),
-                                            )!;
-                                            safeSetState(() {});
-                                            safeSetState(() {
-                                              _model.textController3?.text =
-                                                  valueOrDefault<String>(
-                                                GetGeminiResponseCall
-                                                    .geminiResponseString(
-                                                  (_model.apiResultzff
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                ),
-                                                'No Gemini Response',
-                                              );
-                                            });
-                                          } else {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('no lll re'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          }
+                                        if ((_model.apiResultx05?.succeeded ??
+                                                true) ==
+                                            false) {
+                                          // UpdateGemini
+                                          FFAppState().adjustedPrompt =
+                                              GetGeminiResponseCall
+                                                  .geminiResponseString(
+                                            (_model.apiResultx05?.jsonBody ??
+                                                ''),
+                                          )!;
+                                          safeSetState(() {});
                                         }
 
                                         safeSetState(() {});
                                       },
-                                      text: 'Execute',
+                                      text: 'Gemini Query',
                                       options: FFButtonOptions(
                                         width:
                                             MediaQuery.sizeOf(context).width *
                                                 0.2,
-                                        height: 40.0,
+                                        height: 63.33,
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16.0, 0.0, 16.0, 0.0),
                                         iconPadding:
@@ -611,10 +632,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Inter Tight',
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
                                           shadows: [
                                             Shadow(
                                               color:
@@ -635,44 +673,152 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     padding: EdgeInsets.all(14.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        // AppendGeminiQuery
                                         FFAppState().adjustedPrompt =
                                             functions.setPrompt(
-                                                'summarise into a paragraph of text fit for an executive::',
+                                                FFAppState().adjustedPrompt,
                                                 FFAppState().clipBoard)!;
                                         safeSetState(() {});
-                                        _model.apiResultx05 =
-                                            await GetGeminiResponseCall.call(
-                                          prompt: FFAppState().adjustedPrompt,
-                                          apiKey:
-                                              'AIzaSyD5BdFjsYUy_hiNZ9Bi8RoXS2PLxVYK45Y',
+                                        _model.apiResulthog =
+                                            await AccessViaNgrokGroup
+                                                .notebooklmQueryCall
+                                                .call(
+                                          notebookLMId: _model
+                                              .notebookLMContainerTextController
+                                              .text,
+                                          notebookLMQuery:
+                                              FFAppState().adjustedPrompt,
                                         );
 
-                                        if ((_model.apiResultx05?.succeeded ??
+                                        if ((_model.apiResulthog?.succeeded ??
                                             true)) {
-                                          FFAppState().adjustedPrompt =
-                                              GetGeminiResponseCall
-                                                  .geminiResponseString(
-                                            (_model.apiResultx05?.jsonBody ??
-                                                ''),
-                                          )!;
-                                          safeSetState(() {});
-                                          safeSetState(() {
-                                            _model.textController3?.text =
-                                                valueOrDefault<String>(
-                                              GetGeminiResponseCall
-                                                  .geminiResponseString(
-                                                (_model.apiResultx05
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              ),
-                                              'No Gemini Response',
-                                            );
-                                          });
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Message'),
+                                                content: Text(
+                                                    'NoteNook LLM Query Successful'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Alert'),
+                                                content: Text(
+                                                    'Notebook LLM Call unssuccessful'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
                                         }
 
                                         safeSetState(() {});
                                       },
-                                      text: 'Summarise',
+                                      text: 'NotebookLM Query',
+                                      options: FFButtonOptions(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.2,
+                                        height: 75.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                          shadows: [
+                                            Shadow(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              offset: Offset(4.0, 4.0),
+                                              blurRadius: 4.0,
+                                            )
+                                          ],
+                                        ),
+                                        elevation: 20.0,
+                                        borderRadius:
+                                            BorderRadius.circular(22.0),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(14.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        _model.apiResultv1g =
+                                            await AccessViaNgrokGroup
+                                                .testAPIServiceCall
+                                                .call();
+
+                                        if ((_model.apiResultv1g?.succeeded ??
+                                            true)) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Message Toast'),
+                                                content: Text('API Tested '),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                      text: '.......',
                                       options: FFButtonOptions(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -688,10 +834,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Inter Tight',
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
                                           shadows: [
                                             Shadow(
                                               color:
@@ -714,7 +877,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       onPressed: () {
                                         print('Button pressed ...');
                                       },
-                                      text: 'Read Aloud',
+                                      text: '.......',
                                       options: FFButtonOptions(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -730,10 +893,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Inter Tight',
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
                                           shadows: [
                                             Shadow(
                                               color:
@@ -756,7 +936,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       onPressed: () {
                                         print('Button pressed ...');
                                       },
-                                      text: 'Define Noun',
+                                      text: '.......',
                                       options: FFButtonOptions(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -772,10 +952,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Inter Tight',
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
                                           shadows: [
                                             Shadow(
                                               color:
@@ -798,7 +995,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       onPressed: () {
                                         print('Button pressed ...');
                                       },
-                                      text: 'Decompose Verb',
+                                      text: '......',
                                       options: FFButtonOptions(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -814,52 +1011,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Inter Tight',
+                                          font: GoogleFonts.interTight(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           letterSpacing: 0.0,
-                                          shadows: [
-                                            Shadow(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              offset: Offset(4.0, 4.0),
-                                              blurRadius: 4.0,
-                                            )
-                                          ],
-                                        ),
-                                        elevation: 20.0,
-                                        borderRadius:
-                                            BorderRadius.circular(22.0),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(14.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: 'Research Topic',
-                                      options: FFButtonOptions(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.2,
-                                        height: 40.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Inter Tight',
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
                                           shadows: [
                                             Shadow(
                                               color:
@@ -896,79 +1068,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   width: 3.0,
                                 ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                  child: TextFormField(
-                                    controller: _model.textController3,
-                                    focusNode: _model.textFieldFocusNode2,
-                                    autofocus: false,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    MarkdownBody(
+                                      data: FFAppState().clipBoard,
+                                      selectable: true,
+                                      onTapLink: (_, url, __) =>
+                                          launchURL(url!),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    maxLines: 1000,
-                                    cursorColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    validator: _model.textController3Validator
-                                        .asValidator(context),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),

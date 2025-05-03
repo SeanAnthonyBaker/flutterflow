@@ -9,6 +9,201 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
+/// Start accessViaNgrok Group Code
+
+class AccessViaNgrokGroup {
+  static String getBaseUrl({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) =>
+      'http://81.156.208.52:8000';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'Ngrok-Skip-Browser-Warning': 'true',
+  };
+  static TestAPIServiceCall testAPIServiceCall = TestAPIServiceCall();
+  static NotebooklmDriverSetupCall notebooklmDriverSetupCall =
+      NotebooklmDriverSetupCall();
+  static NotebooklmDriverCloseCall notebooklmDriverCloseCall =
+      NotebooklmDriverCloseCall();
+  static NotebooklmQueryCall notebooklmQueryCall = NotebooklmQueryCall();
+  static PostNodeCall postNodeCall = PostNodeCall();
+}
+
+class TestAPIServiceCall {
+  Future<ApiCallResponse> call({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) async {
+    final baseUrl = AccessViaNgrokGroup.getBaseUrl(
+      notebookLMId: notebookLMId,
+      notebookLMQuery: notebookLMQuery,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'testAPIService',
+      apiUrl: '${baseUrl}/test',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Ngrok-Skip-Browser-Warning': 'true',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class NotebooklmDriverSetupCall {
+  Future<ApiCallResponse> call({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) async {
+    final baseUrl = AccessViaNgrokGroup.getBaseUrl(
+      notebookLMId: notebookLMId,
+      notebookLMQuery: notebookLMQuery,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'NotebooklmDriverSetup',
+      apiUrl: '${baseUrl}/driver/setup',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Ngrok-Skip-Browser-Warning': 'true',
+      },
+      params: {
+        'notebook_id': notebookLMId,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class NotebooklmDriverCloseCall {
+  Future<ApiCallResponse> call({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) async {
+    final baseUrl = AccessViaNgrokGroup.getBaseUrl(
+      notebookLMId: notebookLMId,
+      notebookLMQuery: notebookLMQuery,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'NotebooklmDriverClose',
+      apiUrl: '${baseUrl}/driver/close',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Ngrok-Skip-Browser-Warning': 'true',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class NotebooklmQueryCall {
+  Future<ApiCallResponse> call({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) async {
+    final baseUrl = AccessViaNgrokGroup.getBaseUrl(
+      notebookLMId: notebookLMId,
+      notebookLMQuery: notebookLMQuery,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'NotebooklmQuery',
+      apiUrl: '${baseUrl}/query/execute',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Ngrok-Skip-Browser-Warning': 'true',
+      },
+      params: {
+        'llmquery': notebookLMQuery,
+        'notebook_id': notebookLMId,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? result(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.result''',
+      ));
+}
+
+class PostNodeCall {
+  Future<ApiCallResponse> call({
+    String? notebookLMId =
+        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
+    String? notebookLMQuery = 'how does NDBS win this deal?',
+  }) async {
+    final baseUrl = AccessViaNgrokGroup.getBaseUrl(
+      notebookLMId: notebookLMId,
+      notebookLMQuery: notebookLMQuery,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "title": "subsection of exec summary",
+  "text": "This is the main content of the document.",
+  "parentNodeID": 1,
+  "order": 1,
+  "selected": false,
+  "content": "Your content string goes here"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'postNode',
+      apiUrl: '${baseUrl}/documents/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Ngrok-Skip-Browser-Warning': 'true',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End accessViaNgrok Group Code
+
 class GetGeminiResponseCall {
   static Future<ApiCallResponse> call({
     String? apiKey = 'AIzaSyD5BdFjsYUy_hiNZ9Bi8RoXS2PLxVYK45Y',
@@ -30,7 +225,7 @@ class GetGeminiResponseCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getGeminiResponse',
       apiUrl:
-          'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}',
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}',
       callType: ApiCallType.POST,
       headers: {
         'Content-Tyoe': 'application/json',
@@ -81,7 +276,7 @@ class CheckNLLMresponseCall {
     return ApiManager.instance.makeApiCall(
       callName: 'checkNLLMresponse',
       apiUrl:
-          'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}',
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}',
       callType: ApiCallType.POST,
       headers: {
         'Content-Tyoe': 'application/json',
@@ -175,196 +370,6 @@ class UpdateDocuemntTextCall {
         response,
         r'''$''',
       );
-}
-
-class GetNotebookLLMresponseCall {
-  static Future<ApiCallResponse> call() async {
-    final ffApiRequestBody = '''
-{
-  "chrome_driver_path": "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'getNotebookLLMresponse',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class SetUpNotebookLLMCall {
-  static Future<ApiCallResponse> call() async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'SetUpNotebookLLM',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {
-        'notebook_id':
-            "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583",
-        'llmquery': "What is the best win strategy. ",
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class FastAPITestCall {
-  static Future<ApiCallResponse> call() async {
-    final ffApiRequestBody = '''
-{
-  "chrome_driver_path": "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'FastAPITest',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/test',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class NotebookLLMDriverSetupCall {
-  static Future<ApiCallResponse> call({
-    String? chromeDriverPath =
-        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
-  }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'NotebookLLM Driver Setup',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/driver/setup',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {
-        'notebook_id':
-            "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583",
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class NotebookLLMDriverCloseCall {
-  static Future<ApiCallResponse> call({
-    String? chromeDriverPath =
-        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
-  }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'NotebookLLM Driver Close',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/driver/close',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class NotebookLLMQueryCall {
-  static Future<ApiCallResponse> call({
-    String? chromeDriverPath =
-        'https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583',
-  }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'NotebookLLM Query',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/query/execute',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {
-        'notebook_id':
-            "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583",
-        'llmquery': "Expliain the staff augmentation strategy",
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  static String? lLMAnswer(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.result''',
-      ));
-}
-
-class SetUpNotebookLLCopyCopyCopyCall {
-  static Future<ApiCallResponse> call() async {
-    final ffApiRequestBody = '''
-{
-  "chrome_driver_path": "https://notebooklm.google.com/notebook/142f2ac0-b94c-4a24-ab58-eaf32e4cb583"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'SetUpNotebookLL Copy Copy Copy',
-      apiUrl: 'https://97c9-81-156-208-52.ngrok-free.app/driver/setup',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Ngrok-Skip-Browser-Warning': 'true',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
 }
 
 class ApiPagingParams {

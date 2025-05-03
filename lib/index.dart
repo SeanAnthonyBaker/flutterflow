@@ -1,2 +1,4 @@
 // Export pages
 export '/pages/home_page/home_page_widget.dart' show HomePageWidget;
+export '/pages/hierachy_maintenance/hierachy_maintenance_widget.dart'
+    show HierachyMaintenanceWidget;

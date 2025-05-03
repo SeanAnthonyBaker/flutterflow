@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:flutter/material.dart';
 
@@ -12,24 +13,21 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   FocusNode? promptInputFocusNode;
   TextEditingController? promptInputTextController;
   String? Function(BuildContext, String?)? promptInputTextControllerValidator;
-  // Stores action output result for [Backend Call - API (NotebookLLM Query)] action in IconButton widget.
-  ApiCallResponse? apiResultnsz;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // Stores action output result for [Backend Call - API (NotebookLLM Driver Setup)] action in IconButton widget.
-  ApiCallResponse? apiResultxgp;
-  // Stores action output result for [Backend Call - API (getNotebookLLMresponse)] action in Button widget.
-  ApiCallResponse? apiResultxj9;
-  // Stores action output result for [Backend Call - API (getGeminiResponse)] action in Button widget.
-  ApiCallResponse? apiResultzff;
+  // State field(s) for NotebookLMContainer widget.
+  FocusNode? notebookLMContainerFocusNode;
+  TextEditingController? notebookLMContainerTextController;
+  String? Function(BuildContext, String?)?
+      notebookLMContainerTextControllerValidator;
+  // Stores action output result for [Backend Call - API (NotebooklmDriverSetup)] action in ReadLM widget.
+  ApiCallResponse? apiResultwx5;
+  // Stores action output result for [Backend Call - API (NotebooklmDriverClose)] action in CloseLM widget.
+  ApiCallResponse? apiResult0yw;
   // Stores action output result for [Backend Call - API (getGeminiResponse)] action in Button widget.
   ApiCallResponse? apiResultx05;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
+  // Stores action output result for [Backend Call - API (NotebooklmQuery)] action in Button widget.
+  ApiCallResponse? apiResulthog;
+  // Stores action output result for [Backend Call - API (testAPIService)] action in Button widget.
+  ApiCallResponse? apiResultv1g;
 
   @override
   void initState(BuildContext context) {}
@@ -39,10 +37,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
     promptInputFocusNode?.dispose();
     promptInputTextController?.dispose();
 
-    textFieldFocusNode1?.dispose();
-    textController2?.dispose();
-
-    textFieldFocusNode2?.dispose();
-    textController3?.dispose();
+    notebookLMContainerFocusNode?.dispose();
+    notebookLMContainerTextController?.dispose();
   }
 }

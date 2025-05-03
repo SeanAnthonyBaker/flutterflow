@@ -41,7 +41,7 @@ String? setPrompt(
   String? context,
   String? clipboard,
 ) {
-  return '$context: $clipboard';
+  return '$context $clipboard';
 }
 
 String? jsonToString(dynamic jsonDocument) {
