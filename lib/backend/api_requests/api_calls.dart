@@ -372,6 +372,80 @@ class UpdateDocuemntTextCall {
       );
 }
 
+class CreateNodeCall {
+  static Future<ApiCallResponse> call({
+    int? parentNodeID = 101,
+    String? title = 'test case',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "parentnodeid": ${parentNodeID},
+  "title": "${escapeStringForJson(title)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'createNode',
+      apiUrl:
+          'https://ryeoceystuqrdynbtsvt.supabase.co/rest/v1/rpc/create_node',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5ZW9jZXlzdHVxcmR5bmJ0c3Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU3MzM0NTQsImV4cCI6MjA1MTMwOTQ1NH0.-A7yLW7ca1G3i8XOtNsU4Yy69NIc2f3I__BSSKyrA-U',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic documentJson(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}
+
+class DeleteNodeCall {
+  static Future<ApiCallResponse> call({
+    int? nodeId = 101,
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "node_id": ${nodeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'deleteNode',
+      apiUrl:
+          'https://ryeoceystuqrdynbtsvt.supabase.co/rest/v1/rpc/delete_node',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5ZW9jZXlzdHVxcmR5bmJ0c3Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU3MzM0NTQsImV4cCI6MjA1MTMwOTQ1NH0.-A7yLW7ca1G3i8XOtNsU4Yy69NIc2f3I__BSSKyrA-U',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic documentJson(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

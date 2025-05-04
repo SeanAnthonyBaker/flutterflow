@@ -1,10 +1,11 @@
 import '/backend/supabase/supabase.dart';
+import '/components/dropdown01_options_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'display_tree_model.dart';
 export 'display_tree_model.dart';
@@ -74,153 +75,120 @@ class _DisplayTreeWidgetState extends State<DisplayTreeWidget> {
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          FlutterFlowIconButton(
-                            borderRadius: 8.0,
-                            buttonSize: 40.0,
-                            fillColor: FlutterFlowTheme.of(context).alternate,
-                            icon: Icon(
-                              Icons.account_tree,
-                              color: FlutterFlowTheme.of(context).info,
-                              size: 24.0,
+                          Builder(
+                            builder: (context) => FlutterFlowIconButton(
+                              borderRadius: 8.0,
+                              buttonSize: 40.0,
+                              fillColor: FlutterFlowTheme.of(context).primary,
+                              icon: Icon(
+                                Icons.account_tree,
+                                color: FlutterFlowTheme.of(context).info,
+                                size: 24.0,
+                              ),
+                              onPressed: () async {
+                                await showAlignedDialog(
+                                  context: context,
+                                  isGlobal: false,
+                                  avoidOverflow: true,
+                                  targetAnchor: AlignmentDirectional(-1.0, -1.0)
+                                      .resolve(Directionality.of(context)),
+                                  followerAnchor:
+                                      AlignmentDirectional(-1.0, -1.0)
+                                          .resolve(Directionality.of(context)),
+                                  builder: (dialogContext) {
+                                    return Material(
+                                      color: Colors.transparent,
+                                      child: Dropdown01OptionsWidget(
+                                        dropdownNodeID: widget.node!.nodeID,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                            onPressed: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title:
-                                        Text(widget.node!.nodeID.toString()),
-                                    content:
-                                        Text(_model.titleTextController.text),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
                           ),
-                          Container(
-                            width: 150.0,
-                            child: TextFormField(
-                              controller: _model.titleTextController,
-                              focusNode: _model.titleFocusNode,
-                              autofocus: false,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 5.0, 0.0, 0.0),
+                            child: Container(
+                              width: 150.0,
+                              child: TextFormField(
+                                controller: _model.titleTextController,
+                                focusNode: _model.titleFocusNode,
+                                autofocus: false,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  hoverColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
                                       letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                          .bodyMedium
                                           .fontWeight,
                                       fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                          .bodyMedium
                                           .fontStyle,
                                     ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                maxLines: null,
+                                cursorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                validator: _model.titleTextControllerValidator
+                                    .asValidator(context),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                              maxLines: 2,
-                              maxLength: 40,
-                              maxLengthEnforcement:
-                                  MaxLengthEnforcement.enforced,
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              validator: _model.titleTextControllerValidator
-                                  .asValidator(context),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 AutoSizeText(
                                   valueOrDefault<String>(
@@ -325,17 +293,21 @@ class _DisplayTreeWidgetState extends State<DisplayTreeWidget> {
                                 listViewDocumentsRowList[listViewIndex];
                             return Visibility(
                               visible: widget.node?.visible ?? true,
-                              child: wrapWithModel(
-                                model: _model.displayTreeModels.getModel(
-                                  listViewDocumentsRow.nodeID.toString(),
-                                  listViewIndex,
-                                ),
-                                updateCallback: () => safeSetState(() {}),
-                                child: DisplayTreeWidget(
-                                  key: Key(
-                                    'Keywwl_${listViewDocumentsRow.nodeID.toString()}',
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 1.0, 0.0, 0.0),
+                                child: wrapWithModel(
+                                  model: _model.displayTreeModels.getModel(
+                                    listViewDocumentsRow.nodeID.toString(),
+                                    listViewIndex,
                                   ),
-                                  node: listViewDocumentsRow,
+                                  updateCallback: () => safeSetState(() {}),
+                                  child: DisplayTreeWidget(
+                                    key: Key(
+                                      'Keywwl_${listViewDocumentsRow.nodeID.toString()}',
+                                    ),
+                                    node: listViewDocumentsRow,
+                                  ),
                                 ),
                               ),
                             );

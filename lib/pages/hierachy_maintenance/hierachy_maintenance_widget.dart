@@ -75,6 +75,7 @@ class _HierachyMaintenanceWidgetState extends State<HierachyMaintenanceWidget> {
                       fontWeight: FontWeight.w800,
                       fontStyle: FontStyle.italic,
                     ),
+                    color: FlutterFlowTheme.of(context).alternate,
                     fontSize: 22.0,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w800,
@@ -89,77 +90,25 @@ class _HierachyMaintenanceWidgetState extends State<HierachyMaintenanceWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.sizeOf(context).width * 1.0,
-                    maxHeight: MediaQuery.sizeOf(context).height * 1.0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+                  maxHeight: MediaQuery.sizeOf(context).height * 1.0,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0.0),
+                  border: Border.all(
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    width: 5.0,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0.0),
-                    border: Border.all(
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      width: 5.0,
-                    ),
-                  ),
-                  child: Draggable<String>(
-                    data: '',
-                    feedback: Material(
-                      type: MaterialType.transparency,
-                      child: FutureBuilder<List<DocumentsRow>>(
-                        future: DocumentsTable().queryRows(
-                          queryFn: (q) => q.eqOrNull(
-                            'type',
-                            'DataStructure',
-                          ),
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          List<DocumentsRow> listViewDocumentsRowList =
-                              snapshot.data!;
-
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listViewDocumentsRowList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewDocumentsRow =
-                                  listViewDocumentsRowList[listViewIndex];
-                              return wrapWithModel(
-                                model: _model.displayTreeModels.getModel(
-                                  listViewDocumentsRow.nodeID.toString(),
-                                  listViewIndex,
-                                ),
-                                updateCallback: () => safeSetState(() {}),
-                                child: DisplayTreeWidget(
-                                  key: Key(
-                                    'Keyyla_${listViewDocumentsRow.nodeID.toString()}',
-                                  ),
-                                  node: listViewDocumentsRow,
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                ),
+                child: Draggable<String>(
+                  data: '',
+                  feedback: Material(
+                    type: MaterialType.transparency,
                     child: FutureBuilder<List<DocumentsRow>>(
                       future: DocumentsTable().queryRows(
                         queryFn: (q) => q.eqOrNull(
@@ -211,9 +160,59 @@ class _HierachyMaintenanceWidgetState extends State<HierachyMaintenanceWidget> {
                       },
                     ),
                   ),
+                  child: FutureBuilder<List<DocumentsRow>>(
+                    future: DocumentsTable().queryRows(
+                      queryFn: (q) => q.eqOrNull(
+                        'type',
+                        'DataStructure',
+                      ),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<DocumentsRow> listViewDocumentsRowList =
+                          snapshot.data!;
+
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listViewDocumentsRowList.length,
+                        itemBuilder: (context, listViewIndex) {
+                          final listViewDocumentsRow =
+                              listViewDocumentsRowList[listViewIndex];
+                          return wrapWithModel(
+                            model: _model.displayTreeModels.getModel(
+                              listViewDocumentsRow.nodeID.toString(),
+                              listViewIndex,
+                            ),
+                            updateCallback: () => safeSetState(() {}),
+                            child: DisplayTreeWidget(
+                              key: Key(
+                                'Keyyla_${listViewDocumentsRow.nodeID.toString()}',
+                              ),
+                              node: listViewDocumentsRow,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

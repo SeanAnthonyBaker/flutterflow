@@ -133,24 +133,44 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               );
             },
           ),
-          title: Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
-            child: Text(
-              'Deliverable Generator',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    font: GoogleFonts.interTight(
-                      fontWeight: FontWeight.w800,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w800,
-                    fontStyle: FontStyle.italic,
-                    decoration: TextDecoration.underline,
+          title: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional(0.0, -1.0),
+                  child: Text(
+                    'Deliverable Generator',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          font: GoogleFonts.interTight(
+                            fontWeight: FontWeight.w800,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          color: Colors.white,
+                          fontSize: 22.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w800,
+                          fontStyle: FontStyle.italic,
+                          decoration: TextDecoration.underline,
+                        ),
                   ),
-            ),
+                ),
+              ),
+              FlutterFlowIconButton(
+                borderRadius: 8.0,
+                buttonSize: 40.0,
+                fillColor: FlutterFlowTheme.of(context).primary,
+                icon: Icon(
+                  Icons.refresh,
+                  color: FlutterFlowTheme.of(context).info,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  print('IconButton pressed ...');
+                },
+              ),
+            ],
           ),
           actions: [
             FlutterFlowIconButton(
@@ -669,6 +689,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                     ),
                                   ),
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        MarkdownBody(
+                                          data: FFAppState().clipBoard,
+                                          selectable: true,
+                                          onTapLink: (_, url, __) =>
+                                              launchURL(url!),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   Padding(
                                     padding: EdgeInsets.all(14.0),
                                     child: FFButtonWidget(
@@ -1066,19 +1099,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 shape: BoxShape.rectangle,
                                 border: Border.all(
                                   width: 3.0,
-                                ),
-                              ),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    MarkdownBody(
-                                      data: FFAppState().clipBoard,
-                                      selectable: true,
-                                      onTapLink: (_, url, __) =>
-                                          launchURL(url!),
-                                    ),
-                                  ],
                                 ),
                               ),
                             ),
