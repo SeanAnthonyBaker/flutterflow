@@ -46,4 +46,7 @@ class DocumentsRow extends SupabaseDataRow {
 
   bool? get visible => getField<bool>('visible');
   set visible(bool? value) => setField<bool>('visible', value);
+
+  bool? get children => getField<bool>('children');
+  set children(bool? value) => setField<bool>('children', value);
 }

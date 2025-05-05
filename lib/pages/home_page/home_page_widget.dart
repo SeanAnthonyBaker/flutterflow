@@ -166,8 +166,46 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   color: FlutterFlowTheme.of(context).info,
                   size: 24.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  _model.apiResult2dgreload =
+                      await GetSuperbaseDocumentsCall.call();
+
+                  if ((_model.apiResult2dgreload?.succeeded ?? true)) {
+                    FFAppState().JsonDocument =
+                        GetSuperbaseDocumentsCall.documentJson(
+                      (_model.apiResult2dg?.jsonBody ?? ''),
+                    );
+                    safeSetState(() {});
+                    FFAppState().JsonDocumen2 = getJsonField(
+                      (_model.apiResult2dg?.jsonBody ?? ''),
+                      r'''$''',
+                    );
+                    safeSetState(() {});
+                    FFAppState().WorkingDocument =
+                        functions.cleanJsonDocument(getJsonField(
+                      (_model.apiResult2dg?.jsonBody ?? ''),
+                      r'''$''',
+                    ))!;
+                    safeSetState(() {});
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('not successful'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+
+                  safeSetState(() {});
                 },
               ),
             ],

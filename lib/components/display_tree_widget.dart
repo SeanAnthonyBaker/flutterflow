@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'display_tree_model.dart';
@@ -57,270 +58,309 @@ class _DisplayTreeWidgetState extends State<DisplayTreeWidget> {
   Widget build(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional(-1.0, -1.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: AlignmentDirectional(-1.0, -1.0),
-            child: Padding(
-              padding: EdgeInsets.all(6.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Builder(
-                            builder: (context) => FlutterFlowIconButton(
-                              borderRadius: 8.0,
-                              buttonSize: 40.0,
-                              fillColor: FlutterFlowTheme.of(context).primary,
-                              icon: Icon(
-                                Icons.account_tree,
-                                color: FlutterFlowTheme.of(context).info,
-                                size: 24.0,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: AlignmentDirectional(-1.0, -1.0),
+              child: Padding(
+                padding: EdgeInsets.all(6.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+                          maxHeight: 100.0,
+                        ),
+                        decoration: BoxDecoration(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Builder(
+                              builder: (context) => FlutterFlowIconButton(
+                                borderRadius: 8.0,
+                                buttonSize: 35.0,
+                                fillColor: FlutterFlowTheme.of(context).primary,
+                                icon: Icon(
+                                  Icons.more_vert_rounded,
+                                  color: FlutterFlowTheme.of(context).info,
+                                  size: 20.0,
+                                ),
+                                onPressed: () async {
+                                  await showAlignedDialog(
+                                    context: context,
+                                    isGlobal: false,
+                                    avoidOverflow: true,
+                                    targetAnchor: AlignmentDirectional(
+                                            -1.0, -1.0)
+                                        .resolve(Directionality.of(context)),
+                                    followerAnchor: AlignmentDirectional(
+                                            -1.0, -1.0)
+                                        .resolve(Directionality.of(context)),
+                                    builder: (dialogContext) {
+                                      return Material(
+                                        color: Colors.transparent,
+                                        child: Dropdown01OptionsWidget(
+                                          dropdownNodeID: widget.node!.nodeID,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
-                              onPressed: () async {
-                                await showAlignedDialog(
-                                  context: context,
-                                  isGlobal: false,
-                                  avoidOverflow: true,
-                                  targetAnchor: AlignmentDirectional(-1.0, -1.0)
-                                      .resolve(Directionality.of(context)),
-                                  followerAnchor:
-                                      AlignmentDirectional(-1.0, -1.0)
-                                          .resolve(Directionality.of(context)),
-                                  builder: (dialogContext) {
-                                    return Material(
-                                      color: Colors.transparent,
-                                      child: Dropdown01OptionsWidget(
-                                        dropdownNodeID: widget.node!.nodeID,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 0.0, 0.0),
-                            child: Container(
-                              width: 150.0,
-                              child: TextFormField(
-                                controller: _model.titleTextController,
-                                focusNode: _model.titleFocusNode,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 0.0, 0.0),
+                              child: Container(
+                                width: 130.0,
+                                child: TextFormField(
+                                  controller: _model.titleTextController,
+                                  focusNode: _model.titleFocusNode,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.titleTextController',
+                                    Duration(milliseconds: 2000),
+                                    () async {
+                                      await DocumentsTable().update(
+                                        data: {
+                                          'title':
+                                              _model.titleTextController.text,
+                                        },
+                                        matchingRows: (rows) => rows.eqOrNull(
+                                          'nodeID',
+                                          widget.node?.nodeID,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    hoverColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  maxLines: null,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model.titleTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AutoSizeText(
+                                    valueOrDefault<String>(
+                                      widget.node?.nodeID.toString(),
+                                      'no value',
+                                    ).maybeHandleOverflow(
+                                      maxChars: 0,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                  ),
+                                  AutoSizeText(
+                                    valueOrDefault<String>(
+                                      widget.node?.parentNodeID?.toString(),
+                                      'no value',
+                                    ).maybeHandleOverflow(
+                                      maxChars: 0,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                  ),
+                                  if (widget.node?.children ?? true)
+                                    Icon(
+                                      Icons.account_tree,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      width: 1.0,
+                                      size: 24.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  hoverColor:
-                                      FlutterFlowTheme.of(context).secondary,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                maxLines: null,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.titleTextControllerValidator
-                                    .asValidator(context),
+                                ],
                               ),
                             ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                AutoSizeText(
-                                  valueOrDefault<String>(
-                                    widget.node?.nodeID.toString(),
-                                    'no value',
-                                  ).maybeHandleOverflow(
-                                    maxChars: 0,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                AutoSizeText(
-                                  valueOrDefault<String>(
-                                    widget.node?.parentNodeID?.toString(),
-                                    'no value',
-                                  ).maybeHandleOverflow(
-                                    maxChars: 0,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: FutureBuilder<List<DocumentsRow>>(
-                      future: DocumentsTable().queryRows(
-                        queryFn: (q) => q
-                            .eqOrNull(
-                              'parentNodeID',
-                              widget.node?.nodeID,
-                            )
-                            .order('order', ascending: true),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        List<DocumentsRow> listViewDocumentsRowList =
-                            snapshot.data!;
-
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewDocumentsRowList.length,
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewDocumentsRow =
-                                listViewDocumentsRowList[listViewIndex];
-                            return Visibility(
-                              visible: widget.node?.visible ?? true,
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 1.0, 0.0, 0.0),
-                                child: wrapWithModel(
-                                  model: _model.displayTreeModels.getModel(
-                                    listViewDocumentsRow.nodeID.toString(),
-                                    listViewIndex,
-                                  ),
-                                  updateCallback: () => safeSetState(() {}),
-                                  child: DisplayTreeWidget(
-                                    key: Key(
-                                      'Keywwl_${listViewDocumentsRow.nodeID.toString()}',
-                                    ),
-                                    node: listViewDocumentsRow,
+                    Expanded(
+                      child: FutureBuilder<List<DocumentsRow>>(
+                        future: DocumentsTable().queryRows(
+                          queryFn: (q) => q
+                              .eqOrNull(
+                                'parentNodeID',
+                                widget.node?.nodeID,
+                              )
+                              .order('order', ascending: true),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
                                   ),
                                 ),
                               ),
                             );
-                          },
-                        );
-                      },
+                          }
+                          List<DocumentsRow> listViewDocumentsRowList =
+                              snapshot.data!;
+
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listViewDocumentsRowList.length,
+                            itemBuilder: (context, listViewIndex) {
+                              final listViewDocumentsRow =
+                                  listViewDocumentsRowList[listViewIndex];
+                              return Visibility(
+                                visible: widget.node?.visible ?? true,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 1.0, 0.0, 0.0),
+                                  child: wrapWithModel(
+                                    model: _model.displayTreeModels.getModel(
+                                      listViewDocumentsRow.nodeID.toString(),
+                                      listViewIndex,
+                                    ),
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: DisplayTreeWidget(
+                                      key: Key(
+                                        'Keywwl_${listViewDocumentsRow.nodeID.toString()}',
+                                      ),
+                                      node: listViewDocumentsRow,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

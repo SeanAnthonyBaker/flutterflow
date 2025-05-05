@@ -28,6 +28,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   ApiCallResponse? apiResulthog;
   // Stores action output result for [Backend Call - API (testAPIService)] action in Button widget.
   ApiCallResponse? apiResultv1g;
+  // Stores action output result for [Backend Call - API (getSuperbaseDocuments)] action in IconButton widget.
+  ApiCallResponse? apiResult2dgreload;
 
   @override
   void initState(BuildContext context) {}

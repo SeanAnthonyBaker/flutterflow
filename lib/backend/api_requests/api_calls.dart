@@ -336,7 +336,7 @@ class GetSuperbaseDocumentsCall {
 
 class UpdateDocuemntTextCall {
   static Future<ApiCallResponse> call({
-    int? nodeID = 1,
+    int? nodeID = 102,
     String? text = 'test case',
   }) async {
     final ffApiRequestBody = '''
